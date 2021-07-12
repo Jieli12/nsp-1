@@ -5,7 +5,7 @@
 
 
 library(lpSolve)
-load("wiener_holder_norms.txt")
+# load("wiener_holder_norms.txt")
 
 
 nsp <- function(x, constraints, M, thresh, overlap = FALSE, buffer = 0) {
