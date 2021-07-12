@@ -286,6 +286,7 @@ draw_rects(xw.n.2, c(-1, 5), 20, "brown")
 
 
 set.seed(1)
+squarewave <- rep(c(0, 10, 0, 10), each = 200)
 x.rt.hard <- squarewave + rt(800, 4) * seq(from = 2, to = 8, length = 800)
 x.rt.hard.sn <- nsp_poly_selfnorm(x.rt.hard)
 ts.plot(x.rt.hard, ylab="")
