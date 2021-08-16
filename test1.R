@@ -74,3 +74,18 @@ result2 <- nsp_poly_selfnorm_cpp(x.rt.hard, alpha = alpha, eps = eps)
 set.seed(1234)
 eps <- 0.05
 result3 <- nsp_poly_selfnorm_cpp(x.rt.hard, alpha = alpha, eps = eps)
+
+### profile
+
+rm(list = ls())
+source("NSP_for_Github_v5.R", chdir = TRUE)
+library(tictoc)
+set.seed(1)
+squarewave <- rep(c(0, 10, 0, 10), each = 200)
+x.rt.hard <- squarewave + rt(800, 4) * seq(from = 2, to = 8, length = 800)
+eps <- 0.05
+alpha <- 0.1
+library(profvis)
+profile(
+nsp_poly_selfnorm(x.rt.hard, alpha = alpha, eps = eps))
+

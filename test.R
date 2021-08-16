@@ -1,3 +1,4 @@
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 source("NSP_for_Github_v5.R", chdir = TRUE)
 
 library(tictoc)
