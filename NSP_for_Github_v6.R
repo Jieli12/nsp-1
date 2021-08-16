@@ -263,7 +263,6 @@ sim_max_holder <- function(n, N, eps, c = exp(1 + 2 * eps)) {
 
 draw_rects <- function(nsp.obj, yrange, density = 10, col = "red", x.axis.start = 1) {
 
-<<<<<<< HEAD:NSP_for_Github_v5.R
     # Draw intervals of significance, as shaded rectangular areas, on the current plot.
     # nsp.obj - quantity returned by one of the nsp_* functions.
     # yrange - vector of length two specifying the (lower, upper) vertical limit of the rectangles.
@@ -276,55 +275,37 @@ draw_rects <- function(nsp.obj, yrange, density = 10, col = "red", x.axis.start 
             rect(nsp.obj$intervals[i, 1] + x.axis.start - 1, yrange[1], nsp.obj$intervals[i, 2] + x.axis.start - 1, yrange[2], density = density, col = col)
         }
     }
-=======
-	# Draw intervals of significance, as shaded rectangular areas, on the current plot.
-	# nsp.obj - quantity returned by one of the nsp_* functions.
-	# yrange - vector of length two specifying the (lower, upper) vertical limit of the rectangles.
-	# density - density of the shading; try using 10 or 20.
-	# col - colour of the shading.
-	# x.axis.start - time index the x axis stars from.
-	
-	d <- dim(nsp.obj$intervals)
-	if (d[1]) for (i in 1:d[1]) {
-		
-		rect(nsp.obj$intervals[i,1]+x.axis.start-1, yrange[1], nsp.obj$intervals[i,2]+x.axis.start-1, yrange[2], density=density, col=col)
-		
-		
-	}
-	
->>>>>>> 4f837b65395fc56fb5107c19a9ea7093a57e8101:NSP_for_Github_v6.R
 }
 
 draw_rects_advanced <- function(x, nsp.obj, half.height = NULL, show.middles = TRUE, col.middles = "blue", lwd = 3, density = 10, col.rects = "red", x.axis.start = 1) {
 
-	# Draw intervals of significance, as shaded rectangular areas, on the current plot.
-	# Similar to draw_rects but the rectangles are drawn "at" the data.
-	# x - data.
-	# nsp.obj - quantity returned by one of the nsp_* functions.
-	# half.height - half-height of the rectangle; if null then set to twice the estimated standard deviation of the data.
-	# show.middles - whether to display lines corresponding to the middle points of the rectanlges (rough location estimates).
-	# col.middles - colour for the middle lines.
-	# lwd - line width for the middle lines.
-	# density - density of the shading; try using 10 or 20.
-	# col.rects - colour of the shading.
-	# x.axis.start - time index the x axis stars from.
+    # Draw intervals of significance, as shaded rectangular areas, on the current plot.
+    # Similar to draw_rects but the rectangles are drawn "at" the data.
+    # x - data.
+    # nsp.obj - quantity returned by one of the nsp_* functions.
+    # half.height - half-height of the rectangle; if null then set to twice the estimated standard deviation of the data.
+    # show.middles - whether to display lines corresponding to the middle points of the rectanlges (rough location estimates).
+    # col.middles - colour for the middle lines.
+    # lwd - line width for the middle lines.
+    # density - density of the shading; try using 10 or 20.
+    # col.rects - colour of the shading.
+    # x.axis.start - time index the x axis stars from.
 
-	
-	loc.est <- round((nsp.obj$intervals[,1] + nsp.obj$intervals[,2])/2)
-	
-	if (is.null(half.height)) half.height <- 2 * mad(diff(x)/sqrt(2))
-	
-	centres.y <- x[loc.est]
-	
-	d <- dim(nsp.obj$intervals)
-	if (d[1]) for (i in 1:d[1]) {
-				
-		rect(nsp.obj$intervals[i,1]+x.axis.start-1, centres.y[i]-half.height, nsp.obj$intervals[i,2]+x.axis.start-1, centres.y[i]+half.height, density=density, col=col.rects)
-		
-		if (show.middles) lines(rep(loc.est[i]+x.axis.start-1, 2), c(centres.y[i]-half.height, centres.y[i]+half.height), col=col.middles, lwd = lwd)
-		
-	}
-	
+
+    loc.est <- round((nsp.obj$intervals[, 1] + nsp.obj$intervals[, 2]) / 2)
+
+    if (is.null(half.height)) half.height <- 2 * mad(diff(x) / sqrt(2))
+
+    centres.y <- x[loc.est]
+
+    d <- dim(nsp.obj$intervals)
+    if (d[1]) {
+        for (i in 1:d[1]) {
+            rect(nsp.obj$intervals[i, 1] + x.axis.start - 1, centres.y[i] - half.height, nsp.obj$intervals[i, 2] + x.axis.start - 1, centres.y[i] + half.height, density = density, col = col.rects)
+
+            if (show.middles) lines(rep(loc.est[i] + x.axis.start - 1, 2), c(centres.y[i] - half.height, centres.y[i] + half.height), col = col.middles, lwd = lwd)
+        }
+    }
 }
 
 
@@ -340,8 +321,7 @@ cpt_importance <- function(nsp.obj) {
         h.ord <- order(heights)
         labels <- paste(as.character(round(nsp.obj$intervals[h.ord, 1])), "-", as.character(round(nsp.obj$intervals[h.ord, 2])), sep = "")
         barplot(heights[h.ord], names.arg = labels)
-    }
-    else {
+    } else {
         warning("No change-points to arrange in order of importance.")
     }
 }
@@ -400,8 +380,7 @@ all_dyadic_scans_array <- function(x) {
                 shifts[j + 1] <- 2^j - 1
             }
         }
-    }
-    else {
+    } else {
         res <- array(0, c(d[1], d[2], 0))
         shifts <- integer(0)
     }
@@ -430,33 +409,25 @@ iter_random_checks_scan_array <- function(ind, ads.array, M, thresh, overlap = F
                 if (n - next.int$selected.val[1, 2] - buffer >= 1) {
                     right <- iter_random_checks_scan_array(c(next.int$selected.val[1, 2] + buffer, n), ads.array, M, thresh, overlap, buffer)
                     if (dim(right)[2]) right <- right + c(rep(next.int$selected.val[1, 2] - 1 + buffer, 2), 0)
-                }
-                else {
+                } else {
                     right <- matrix(NA, 3, 0)
                 }
-            }
-
-            else {
+            } else {
                 if (floor(mean(next.int$selected.val[1, 1:2])) - buffer >= 2) left <- iter_random_checks_scan_array(c(1, floor(mean(next.int$selected.val[1, 1:2])) - buffer), ads.array, M, thresh, overlap, buffer) else left <- matrix(NA, 3, 0)
                 if (n - floor(mean(next.int$selected.val[1, 1:2])) - buffer >= 2) {
                     right <- iter_random_checks_scan_array(c(floor(mean(next.int$selected.val[1, 1:2])) + 1 + buffer, n), ads.array, M, thresh, overlap, buffer)
                     if (dim(right)[2]) right <- right + c(rep(floor(mean(next.int$selected.val[1, 1:2])) + buffer, 2), 0)
-                }
-                else {
+                } else {
                     right <- matrix(NA, 3, 0)
                 }
             }
 
 
             return(cbind(t(next.int$selected.val), left, right))
-        }
-
-        else {
+        } else {
             (return(matrix(NA, 3, 0)))
         }
-    }
-
-    else {
+    } else {
         (return(matrix(NA, 3, 0)))
     }
 }
@@ -517,15 +488,11 @@ random_checks_scan_array_1by1 <- function(ind, ads.array, M, thresh) {
         if (zero.check) {
             selected.ind <- NA
             selected.val <- matrix(0, 0, 3)
-        }
-
-        else {
+        } else {
             selected.ind <- j - 1
             selected.val <- res[selected.ind, , drop = FALSE]
         }
-    }
-
-    else {
+    } else {
         selected.val <- matrix(0, 0, 3)
         selected.ind <- NA
         M <- 0
@@ -724,15 +691,11 @@ random_checks_scan_array_selfnorm_1by1 <- function(ind, ads.array, M, thresh, Vn
         if (zero.check) {
             selected.ind <- NA
             selected.val <- matrix(0, 0, 3)
-        }
-
-        else {
+        } else {
             selected.ind <- j - 1
             selected.val <- res[selected.ind, , drop = FALSE]
         }
-    }
-
-    else {
+    } else {
         filtered.res <- selected.val <- matrix(0, 0, 3)
         selected.ind <- NA
         M <- 0
@@ -783,33 +746,25 @@ ircs2sas <- function(ind, ads.array, M, thresh, Vn2est, eps = 0.03, c = exp(1 + 
                 if (n - next.int$selected.val[1, 2] >= 1) {
                     right <- ircs2sas(c(next.int$selected.val[1, 2], n), ads.array, M, thresh, Vn2est, eps, c, overlap)
                     if (dim(right)[2]) right <- right + c(rep(next.int$selected.val[1, 2] - 1, 2), 0)
-                }
-                else {
+                } else {
                     right <- matrix(NA, 3, 0)
                 }
-            }
-
-            else {
+            } else {
                 if (floor(mean(next.int$selected.val[1, 1:2])) >= 2) left <- ircs2sas(c(1, floor(mean(next.int$selected.val[1, 1:2]))), ads.array, M, thresh, Vn2est, eps, c, overlap) else left <- matrix(NA, 3, 0)
                 if (n - floor(mean(next.int$selected.val[1, 1:2])) >= 2) {
                     right <- ircs2sas(c(floor(mean(next.int$selected.val[1, 1:2])) + 1, n), ads.array, M, thresh, Vn2est, eps, c, overlap)
                     if (dim(right)[2]) right <- right + c(rep(floor(mean(next.int$selected.val[1, 1:2])), 2), 0)
-                }
-                else {
+                } else {
                     right <- matrix(NA, 3, 0)
                 }
             }
 
 
             return(cbind(t(next.int$selected.val), left, right))
-        }
-
-        else {
+        } else {
             (return(matrix(NA, 3, 0)))
         }
-    }
-
-    else {
+    } else {
         (return(matrix(NA, 3, 0)))
     }
 }
