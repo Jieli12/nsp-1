@@ -263,6 +263,7 @@ sim_max_holder <- function(n, N, eps, c = exp(1 + 2 * eps)) {
 
 draw_rects <- function(nsp.obj, yrange, density = 10, col = "red", x.axis.start = 1) {
 
+<<<<<<< HEAD:NSP_for_Github_v5.R
     # Draw intervals of significance, as shaded rectangular areas, on the current plot.
     # nsp.obj - quantity returned by one of the nsp_* functions.
     # yrange - vector of length two specifying the (lower, upper) vertical limit of the rectangles.
@@ -275,7 +276,57 @@ draw_rects <- function(nsp.obj, yrange, density = 10, col = "red", x.axis.start 
             rect(nsp.obj$intervals[i, 1] + x.axis.start - 1, yrange[1], nsp.obj$intervals[i, 2] + x.axis.start - 1, yrange[2], density = density, col = col)
         }
     }
+=======
+	# Draw intervals of significance, as shaded rectangular areas, on the current plot.
+	# nsp.obj - quantity returned by one of the nsp_* functions.
+	# yrange - vector of length two specifying the (lower, upper) vertical limit of the rectangles.
+	# density - density of the shading; try using 10 or 20.
+	# col - colour of the shading.
+	# x.axis.start - time index the x axis stars from.
+	
+	d <- dim(nsp.obj$intervals)
+	if (d[1]) for (i in 1:d[1]) {
+		
+		rect(nsp.obj$intervals[i,1]+x.axis.start-1, yrange[1], nsp.obj$intervals[i,2]+x.axis.start-1, yrange[2], density=density, col=col)
+		
+		
+	}
+	
+>>>>>>> 4f837b65395fc56fb5107c19a9ea7093a57e8101:NSP_for_Github_v6.R
 }
+
+draw_rects_advanced <- function(x, nsp.obj, half.height = NULL, show.middles = TRUE, col.middles = "blue", lwd = 3, density = 10, col.rects = "red", x.axis.start = 1) {
+
+	# Draw intervals of significance, as shaded rectangular areas, on the current plot.
+	# Similar to draw_rects but the rectangles are drawn "at" the data.
+	# x - data.
+	# nsp.obj - quantity returned by one of the nsp_* functions.
+	# half.height - half-height of the rectangle; if null then set to twice the estimated standard deviation of the data.
+	# show.middles - whether to display lines corresponding to the middle points of the rectanlges (rough location estimates).
+	# col.middles - colour for the middle lines.
+	# lwd - line width for the middle lines.
+	# density - density of the shading; try using 10 or 20.
+	# col.rects - colour of the shading.
+	# x.axis.start - time index the x axis stars from.
+
+	
+	loc.est <- round((nsp.obj$intervals[,1] + nsp.obj$intervals[,2])/2)
+	
+	if (is.null(half.height)) half.height <- 2 * mad(diff(x)/sqrt(2))
+	
+	centres.y <- x[loc.est]
+	
+	d <- dim(nsp.obj$intervals)
+	if (d[1]) for (i in 1:d[1]) {
+				
+		rect(nsp.obj$intervals[i,1]+x.axis.start-1, centres.y[i]-half.height, nsp.obj$intervals[i,2]+x.axis.start-1, centres.y[i]+half.height, density=density, col=col.rects)
+		
+		if (show.middles) lines(rep(loc.est[i]+x.axis.start-1, 2), c(centres.y[i]-half.height, centres.y[i]+half.height), col=col.middles, lwd = lwd)
+		
+	}
+	
+}
+
 
 
 cpt_importance <- function(nsp.obj) {
