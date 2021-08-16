@@ -1,7 +1,7 @@
 ---
 title: 'Changes in R package: nsp'
 author: "Jie Li"
-date: "2021-07-012"
+date: "2021-08-16"
 # bookdown::pdf_document2: default
 header-includes:
     - \usepackage{amsmath}
@@ -235,5 +235,42 @@ If \(x\) is rescaled in the interval \( [0,1] \), the above code is OK. My sugge
 
 **Note:** all the issues and suggestions in this section are not shown in the new **nsp** package. I only add **# TODO** tag to indicate them. Therefore, the **nsp** package is currently under development.
 
+# Package lpSolveAPI
+New branch in GitHub: dev_api. The code is
 
+```r
+# for branch dev_api
+library(nsp)
+library(tictoc)
+set.seed(1)
+eps <- 0.05
+wt <- nsp::sim_max_holder_cpp(1000, 1000, eps)
+alpha <- 0.1
+thresh <- quantile(wt, 1 - alpha)
+
+squarewave <- rep(c(0, 10, 0, 10), each = 200)
+x.rt.hard <- squarewave + rt(800, 4) * seq(from = 2, to = 8, length = 800)
+tic()
+set.seed(1)
+x.rt.hard.sn_init <- nsp_poly_selfnorm_cpp(x.rt.hard, thresh = thresh, alpha = alpha, eps = eps)
+x.rt.hard.sn_init
+toc()
+```
+The result is:
+
+```r
+> x.rt.hard.sn_init
+$intervals
+  starts ends   values
+1    103  232 2.214924
+2    340  485 2.340998
+3    535  668 2.207053
+
+$threshold.used
+     90%
+2.201097
+
+> toc()
+15.671 sec elapsed
+```
 # References
