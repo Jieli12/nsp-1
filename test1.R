@@ -1,5 +1,6 @@
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 rm(list = ls())
-source("NSP_for_Github_v5.R", chdir = TRUE)
+source("NSP_for_Github_v6.R", chdir = TRUE)
 # verify the cpp functions
 n <- 1000
 eps <- 0.05
@@ -28,12 +29,14 @@ sqrt(mean((thresh.0 - thresh.1)^2))
 sqrt(mean((thresh.0 - thresh.2)^2))
 
 rm(list = ls())
+
+
 source("NSP_for_Github_v5.R", chdir = TRUE)
 library(tictoc)
 set.seed(1)
 squarewave <- rep(c(0, 10, 0, 10), each = 200)
 x.rt.hard <- squarewave + rt(800, 4) * seq(from = 2, to = 8, length = 800)
-eps <- 0.05
+eps <- 0.03
 alpha <- 0.1
 library(microbenchmark)
 microbenchmark(
@@ -83,9 +86,9 @@ library(tictoc)
 set.seed(1)
 squarewave <- rep(c(0, 10, 0, 10), each = 200)
 x.rt.hard <- squarewave + rt(800, 4) * seq(from = 2, to = 8, length = 800)
-eps <- 0.05
+eps <- 0.03
 alpha <- 0.1
 library(profvis)
-profile(
+p <- profvis(
 nsp_poly_selfnorm(x.rt.hard, alpha = alpha, eps = eps))
 
