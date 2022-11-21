@@ -9,7 +9,6 @@ library(lpSolve)
 
 
 nsp <- function(x, constraints, M, thresh, overlap = FALSE, buffer = 0) {
-
     # Generic NSP function. Do not use unless you know what 'thresh' value to set. Use one of the nsp_* functions below (without _selfnorm) instead.
     # x - data (referred to in the paper as Y).
     # constraints - design matrix (referred to in the paper as X).
@@ -41,7 +40,6 @@ nsp <- function(x, constraints, M, thresh, overlap = FALSE, buffer = 0) {
 
 
 nsp_poly <- function(x, M = 1000, thresh = NULL, sigma = NULL, alpha = 0.1, deg = 0, overlap = FALSE) {
-
     # NSP implementation when x is believed to be a piecewise polynomial plus iid Gaussian noise. This covers Scenarios 1 and 2 from the paper.
     # x - data (referred to in the paper as Y).
     # M - number of intervals to draw; this implementation uses a deterministic equispaced grid for drawing intervals.
@@ -78,7 +76,6 @@ nsp_poly <- function(x, M = 1000, thresh = NULL, sigma = NULL, alpha = 0.1, deg 
 
 
 nsp_poly_ar <- function(x, ord = 1, M = 1000, thresh = NULL, sigma = NULL, alpha = 0.1, deg = 0, power = 1 / 2, min.size = 20, overlap = FALSE, buffer = ord) {
-
     # NSP implementation when x is believed to be a piecewise polynomial plus autoregressive Gaussian noise. This covers Scenario 4 from the paper (with a piecewise polynomial regression part).
     # x - data (referred to in the paper as Y).
     # ord - the order of the autoregression.
@@ -129,7 +126,6 @@ nsp_poly_ar <- function(x, ord = 1, M = 1000, thresh = NULL, sigma = NULL, alpha
 
 
 nsp_tvreg <- function(y, x, M = 1000, thresh = NULL, sigma = NULL, alpha = 0.1, power = 1 / 2, min.size = 20, overlap = FALSE) {
-
     # NSP for general regression, but without autoregression. This covers Scenario 3 from the paper.
     # y - data (referred to in the paper as Y).
     # x - design matrix (referred to in the paper as X).
@@ -162,7 +158,6 @@ nsp_tvreg <- function(y, x, M = 1000, thresh = NULL, sigma = NULL, alpha = 0.1, 
 
 
 nsp_selfnorm <- function(x, constraints, M, thresh, power = 1 / 2, minsize = 20, eps = 0.03, c = exp(1 + 2 * eps), overlap = FALSE) {
-
     # Self-normalised NSP for general regression.
     # x - data (referred to in the paper as Y).
     # constraints - design matrix (referred to in the paper as X).
@@ -206,7 +201,6 @@ nsp_selfnorm <- function(x, constraints, M, thresh, power = 1 / 2, minsize = 20,
 
 
 nsp_poly_selfnorm <- function(x, M = 1000, thresh = NULL, power = 1 / 2, minsize = 20, alpha = 0.1, deg = 0, eps = 0.03, c = exp(1 + 2 * eps), overlap = FALSE) {
-
     # Self-normalised NSP when x is believed to be a piecewise polynomial plus (possibly heterogeneous and/or heavy-tailed) noise.
     # x - data (referred to in the paper as Y).
     # M - number of intervals to draw; this implementation uses a deterministic equispaced grid for drawing intervals.
@@ -245,7 +239,6 @@ nsp_poly_selfnorm <- function(x, M = 1000, thresh = NULL, power = 1 / 2, minsize
 
 
 sim_max_holder <- function(n, N, eps, c = exp(1 + 2 * eps)) {
-
     # Simulate a sample of size N of values of the Holder-like norm of the Wiener process discretised with step 1/n.
     # See the "Example" in the description of the function "nsp_selfnorm".
 
@@ -262,7 +255,6 @@ sim_max_holder <- function(n, N, eps, c = exp(1 + 2 * eps)) {
 
 
 draw_rects <- function(nsp.obj, yrange, density = 10, col = "red", x.axis.start = 1) {
-
     # Draw intervals of significance, as shaded rectangular areas, on the current plot.
     # nsp.obj - quantity returned by one of the nsp_* functions.
     # yrange - vector of length two specifying the (lower, upper) vertical limit of the rectangles.
@@ -278,7 +270,6 @@ draw_rects <- function(nsp.obj, yrange, density = 10, col = "red", x.axis.start 
 }
 
 draw_rects_advanced <- function(x, nsp.obj, half.height = NULL, show.middles = TRUE, col.middles = "blue", lwd = 3, density = 10, col.rects = "red", x.axis.start = 1) {
-
     # Draw intervals of significance, as shaded rectangular areas, on the current plot.
     # Similar to draw_rects but the rectangles are drawn "at" the data.
     # x - data.
@@ -311,7 +302,6 @@ draw_rects_advanced <- function(x, nsp.obj, half.height = NULL, show.middles = T
 
 
 cpt_importance <- function(nsp.obj) {
-
     # Change-point prominence plot as described in Section 4 of the paper.
     # nsp.obj - quantity returned by one of the nsp_* functions.
 
@@ -327,7 +317,6 @@ cpt_importance <- function(nsp.obj) {
 }
 
 order_chron <- function(nsp.obj) {
-
     # Order intervals of significance chronologically.
     # nsp.obj - quantity returned by one of the nsp_* functions.
 
@@ -341,7 +330,6 @@ order_chron <- function(nsp.obj) {
 }
 
 select_narrowest <- function(nsp.obj, how.many = dim(nsp.obj)[2], order.chron = FALSE) {
-
     # Select how.many narrowest intervals of significance.
     # nsp.obj - quantity returned by one of the nsp_* functions.
     # order.chron - whether to order them chronologically (TRUE) or in increasing order of width (FALSE).
