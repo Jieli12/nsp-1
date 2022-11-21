@@ -675,7 +675,7 @@ check_interval_array <- function(ind, ads.array, thresh) {
 
     dm <- dim(ads.array$res)
 
-    f.con.rhs.core <- matrix(0, 0, 1 + 2 * (dm[2] - 1))
+    f.con.rhs.core <- matrix(0, 0, dm[2])
 
     scales <- length(ads.array$shifts)
 
@@ -705,7 +705,7 @@ lp_selfnorm <- function(ind, ads.array, selfnorm.array) {
 
     dm <- dim(ads.array$res)
 
-    f.con.rhs.core <- matrix(0, 0, 1 + 2 * (dm[2] - 1))
+    f.con.rhs.core <- matrix(0, 0,  dm[2])
 
     scales <- length(ads.array$shifts)
 
