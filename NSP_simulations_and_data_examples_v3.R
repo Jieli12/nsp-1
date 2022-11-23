@@ -213,6 +213,7 @@ covv <- matrix(1, 130, 2)
 covv[, 2] <- log(nmp[1:130])
 resp <- log(nmp[2:131])
 nsp_tvreg(resp, covv, 1000, overlap = TRUE)
+nsp::nsp_tvreg(resp, covv, 1000, overlap = TRUE)
 
 summary(lm(resp[1:60] ~ covv[1:60, ] - 1))
 summary(lm(resp[61:130] ~ covv[61:130, ] - 1))
@@ -277,6 +278,7 @@ draw_rects(xw.n.2, c(-1, 5), 20, "brown")
 
 
 set.seed(1)
+squarewave <- rep(c(0, 10, 0, 10), each = 200)
 x.rt.hard <- squarewave + rt(800, 4) * seq(from = 2, to = 8, length = 800)
 x.rt.hard.sn <- nsp_poly_selfnorm(x.rt.hard)
 ts.plot(x.rt.hard, ylab = "")
